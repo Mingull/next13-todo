@@ -127,9 +127,9 @@ const Sidebar = ({ children, user }: SidebarProps) => {
 								>
 									<path
 										stroke="currentColor"
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										stroke-width="2"
+										strokeLinecap="round"
+										strokeLinejoin="round"
+										strokeWidth="2"
 										d="M1 8h11m0 0L8 4m4 4-4 4m4-11h3a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-3"
 									/>
 								</svg>
@@ -156,7 +156,18 @@ const Sidebar = ({ children, user }: SidebarProps) => {
 				</SidebarBody>
 				{user ? (
 					<SidebarFooter>
-						<Image src={user?.image || ""} alt={user.name || ""} />
+						<div className="flex justify-between w-full">
+							<div>
+								<p>{user.name}</p>
+							</div>
+							<Image
+								width={100}
+								height={100}
+								className="w-8 h-8 rounded-full"
+								src={user?.image || ""}
+								alt={user.name || ""}
+							/>
+						</div>
 					</SidebarFooter>
 				) : null}
 			</SidebarWrapper>

@@ -39,7 +39,7 @@ const HeaderButton: FC<HeaderButton> = ({ user }) => {
 					width={100}
 					height={100}
 					className="w-8 h-8 mr-2 rounded-full"
-					src={user.image}
+					src={user.image || ""}
 					alt={`${user.name} profile picture`}
 				/>
 			) : (

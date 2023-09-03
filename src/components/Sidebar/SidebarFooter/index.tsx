@@ -5,7 +5,7 @@ import { X } from "lucide-react";
 import React from "react";
 import { useSidebar } from "../Sidebar.context";
 
-export const sidebarFooterVariants = cva("absolute bottom-0", {
+export const sidebarFooterVariants = cva("absolute bottom-0 mb-4", {
 	variants: {
 		variant: {
 			default: "",

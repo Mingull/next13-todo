@@ -4,7 +4,7 @@ import { MotionProps, Variants, motion } from "framer-motion";
 import React from "react";
 import { useSidebar } from "../Sidebar.context";
 
-export const sidebarItemGroupVariants = cva("space-y-2 font-medium", {
+export const sidebarItemGroupVariants = cva("space-y-2 font-medium my-2", {
 	variants: {
 		variant: {
 			default: "",

@@ -4,7 +4,7 @@ import { MotionProps, Variants, motion } from "framer-motion";
 import React from "react";
 import { useSidebar } from "../Sidebar.context";
 
-export const sidebarBodyVariants = cva("py-4 overflow-y-auto divide-y divide-zinc-500", {
+export const sidebarBodyVariants = cva("py-4 overflow-y-auto divide-y divide-zinc-500 space-y-2", {
 	variants: {
 		variant: {
 			default: "",
