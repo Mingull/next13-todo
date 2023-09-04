@@ -1,11 +1,8 @@
 import { prisma } from "@/db";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
-import { NextAuthOptions, Session, getServerSession } from "next-auth";
-import { Adapter } from "next-auth/adapters";
-import GoogleProvider from "next-auth/providers/google";
+import { NextAuthOptions } from "next-auth";
 import GithubProvider from "next-auth/providers/github";
-import { AuthRequiredError } from "../exceptions/Errors";
-import { useEffect, useState } from "react";
+import GoogleProvider from "next-auth/providers/google";
 
 export const authOptions: NextAuthOptions = {
 	adapter: PrismaAdapter(prisma),
@@ -71,4 +68,3 @@ function getGithubCredentials(): { clientId: string; clientSecret: string } {
 
 	return { clientId, clientSecret };
 }
-
