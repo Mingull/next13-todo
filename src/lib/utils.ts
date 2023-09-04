@@ -28,3 +28,16 @@ export function multiCapitalize(...args: any[]): string[] {
 export function splitWord(word: string, index: number): [string, string] | null {
 	return index >= 0 && index < word.length ? [word.substring(0, index), word.substring(index)] : null;
 }
+
+export type ServerDispatch<A> = (value: A) => void;
+export type SetServerStateAction<S> = S | ((prevState: S) => S);
+export const createServerState = <S>(initialValue: S | (() => S)): [S, ServerDispatch<SetServerStateAction<S>>] => {
+	let stateValue: S = typeof initialValue === "function" ? (initialValue as () => S)() : initialValue;
+
+	const setValue: ServerDispatch<SetServerStateAction<S>> = (value: S | ((prevState: S) => S)) => {
+		if (typeof value === "function") stateValue = (value as (prevState: S) => S)(stateValue);
+		else stateValue = value;
+	};
+
+	return [stateValue, setValue];
+};

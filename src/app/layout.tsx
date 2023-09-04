@@ -1,7 +1,7 @@
 import "@/app/globals.css";
 import { UI, Providers, Sidebar } from "@/components";
 import Header from "@/components/Header";
-import { authOptions } from "@/lib/auth";
+import { authOptions } from "@/lib/auth/options";
 import ThemeProvider from "@/lib/contexts/Theme.context";
 import type { Metadata } from "next";
 import { getServerSession } from "next-auth";

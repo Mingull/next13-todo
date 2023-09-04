@@ -1,5 +1,5 @@
 import { Button } from "@/components/Button";
-import { authOptions } from "@/lib/auth";
+import { authOptions } from "@/lib/auth/options";
 import { AuthRequiredError } from "@/lib/exceptions/Errors";
 import { capitalize, multiCapitalize, splitWord } from "@/lib/utils";
 import { getServerSession } from "next-auth";

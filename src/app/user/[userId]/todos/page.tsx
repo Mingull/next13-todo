@@ -1,6 +1,6 @@
 import PaginationControls from "@/components/PaginationControls";
 import { prisma } from "@/db";
-import { authOptions } from "@/lib/auth";
+import { authOptions } from "@/lib/auth/options";
 import { AuthRequiredError, UserNotFoundError } from "@/lib/exceptions/Errors";
 import { Todo, User } from "@prisma/client";
 import { getServerSession } from "next-auth";

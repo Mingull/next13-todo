@@ -1,7 +1,7 @@
 import Pagination from "@/components/Pagination";
 import { buttonVariants } from "@/components/Button";
 import { prisma } from "@/db";
-import { authOptions } from "@/lib/auth";
+import { authOptions } from "@/lib/auth/options";
 import { AuthRequiredError } from "@/lib/exceptions/Errors";
 import { cn } from "@/lib/utils";
 import { Todo } from "@prisma/client";

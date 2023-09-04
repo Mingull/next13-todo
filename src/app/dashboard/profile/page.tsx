@@ -1,4 +1,4 @@
-import { authOptions } from "@/lib/auth";
+import { authOptions } from "@/lib/auth/options";
 import { AuthRequiredError } from "@/lib/exceptions/Errors";
 import { getServerSession } from "next-auth";
 import Image from "next/image";
