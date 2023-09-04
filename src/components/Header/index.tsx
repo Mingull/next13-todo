@@ -12,7 +12,8 @@ import { getServerSession } from "next-auth";
 import { authOptions, getSecureServerSession } from "@/lib/auth";
 
 const Header = async () => {
-	const session = await getSecureServerSession(authOptions);
+	const { status, session } = await getSecureServerSession(authOptions);
+	console.log(status);
 	const items: Item[] = [
 		{
 			title: "Dashboard",
@@ -30,7 +31,7 @@ const Header = async () => {
 		<div className="py-4 mb-5 shadow bg-zinc-100 dark:bg-zinc-900 text-zinc-800 dark:text-zinc-200">
 			<div className="flex items-center justify-between ml-5 mr-10">
 				<div className="flex items-center gap-x-12">
-					<HeaderSidebar user={session.user} />
+					{status !== "loading" && status === "authorized" ? <HeaderSidebar user={session.user} /> : null}
 					<Link href={"/"}>
 						<Title title="SecureInfo" />
 					</Link>
@@ -45,7 +46,9 @@ const Header = async () => {
 						</>
 					)} */}
 				</div>
-				{session && session.user ? (
+				{status === "loading" ? (
+					<>Loading...</>
+				) : status === "authorized" ? (
 					<div>
 						<HeaderDropdown items={items} user={session.user} />
 					</div>

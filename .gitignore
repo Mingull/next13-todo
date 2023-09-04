@@ -38,3 +38,5 @@ next-env.d.ts
 client_secret.json
 
 todo_app.*
+
+/prisma/schema.local.prisma
