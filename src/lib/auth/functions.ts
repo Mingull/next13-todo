@@ -1,6 +1,8 @@
 import { NextAuthOptions, Session, getServerSession } from "next-auth";
 import { AuthRequiredError } from "../exceptions/Errors";
-import { createServerState } from "../utils";
+
+// Import createServerState and createServerEffect functions and types
+import { createServerState, createServerEffect } from "../utils";
 
 type AuthorizedResponse = {
 	status: "authorized";
@@ -14,7 +16,7 @@ type LoadingResponse = {
 
 type ErrorResponse = {
 	status: "error";
-	message: string; // Add a message property to error response
+	message: string;
 };
 
 type UnauthorizedResponse = {
@@ -31,29 +33,36 @@ export const getSecureServerSession: SecureSession = async (authOptions, throwEr
 	// Use createServerState to manage server-side state
 	const [session, setSession] = createServerState<Session | null>(null);
 
-	// Start a timer to check for completion after a certain period
-	const timeoutPromise = new Promise<null>((resolve) => {
-		setTimeout(() => resolve(null), 5000); // Adjust the timeout as needed
-	});
+	// Use createServerEffect for side effects on the server
+	createServerEffect(() => {
+		// Start a timer to check for completion after a certain period
+		const timeoutPromise = new Promise<null>((resolve) => {
+			setTimeout(() => resolve(null), 5000); // Adjust the timeout as needed
+		});
 
-	try {
-		// Try to get the session
-		if (session === null) {
-			session = await Promise.race([getServerSession(authOptions), timeoutPromise]);
-			setSession(session); // Update the server-side state with the retrieved session
+		async function fetchSession() {
+			try {
+				// Try to get the session
+				if (session === null) {
+					const fetchedSession = await Promise.race([getServerSession(authOptions), timeoutPromise]);
+					setSession(fetchedSession); // Update the server-side state with the retrieved session
+				}
+
+				if (!session && throwError) {
+					throw new AuthRequiredError();
+				}
+			} catch (error) {
+				console.error("Error in getSecureServerSession:", error);
+				// You can handle the error here or rethrow it as needed
+			}
 		}
 
-		if (!session && throwError) {
-			throw new AuthRequiredError();
-		}
-
-		if (!session) {
-			return { status: "unauthorized", session: null };
-		} else {
-			return { status: "authorized", session };
-		}
-	} catch (error) {
-		console.error("Error in getSecureServerSession:", error);
-		return { status: "error", message: "Something went wrong" };
+		fetchSession(); // Call the async function
+	}, [session]);
+	
+	if (!session) {
+		return { status: "unauthorized", session: null };
+	} else {
+		return { status: "authorized", session };
 	}
 };

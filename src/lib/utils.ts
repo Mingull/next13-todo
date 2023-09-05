@@ -1,4 +1,5 @@
 import { ClassValue, clsx } from "clsx";
+import { useEffect } from "react";
 import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
@@ -40,4 +41,64 @@ export const createServerState = <S>(initialValue: S | (() => S)): [S, ServerDis
 	};
 
 	return [stateValue, setValue];
+};
+useEffect;
+const UNDEFINED_VOID_ONLY = Symbol();
+type Destructor = () => void;
+type DependencyList = ReadonlyArray<unknown>;
+
+type ServerEffectCallback = () => void | Destructor;
+type ServerEffect = (effect: ServerEffectCallback, deps?: DependencyList) => void;
+
+export const createServerEffect: ServerEffect = (effect, deps) => {
+	let cleanup: void | Destructor;
+
+	const cleanupEffect = () => {
+		if (cleanup) {
+			cleanup();
+		}
+	};
+
+	const runEffect = () => {
+		cleanupEffect(); // Clean up the previous effect
+
+		cleanup = effect(); // Execute the new effect and store the cleanup function
+
+		if (cleanup && typeof cleanup !== "function") {
+			delete cleanup[UNDEFINED_VOID_ONLY];
+		}
+	};
+
+	if (!deps) {
+		runEffect(); // Run the effect without dependencies
+	} else {
+		const depValues = deps.map((dep) => ({ value: dep }));
+		const checkDeps = () => {
+			for (let i = 0; i < depValues.length; i++) {
+				if (depValues[i].value !== deps[i]) {
+					return true;
+				}
+			}
+			return false;
+		};
+
+		const updateEffectIfChanged = () => {
+			if (checkDeps()) {
+				runEffect();
+				depValues.forEach((dep, i) => {
+					dep.value = deps[i];
+				});
+			}
+		};
+
+		updateEffectIfChanged(); // Initial run
+
+		// Subscribe to dependency changes
+		const unsubscribe = () => {
+			cleanupEffect();
+			depValues.length = 0; // Clear the dependency values
+		};
+
+		return unsubscribe;
+	}
 };
