@@ -1,6 +1,6 @@
 import { createContext, useContext } from "react";
 
-const createSafeContext = <C,>(errorMessage: string) => {
+export const createSafeContext = <C,>(errorMessage: string) => {
 	const Context = createContext<C | null>(null);
 
 	const useSafeContext = () => {

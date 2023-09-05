@@ -1,5 +1,4 @@
 "use client";
-import { useTheme } from "@/lib/contexts/Theme.context";
 import { cn } from "@/lib/utils";
 import { FC } from "react";
 
