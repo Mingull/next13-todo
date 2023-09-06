@@ -1,5 +1,5 @@
 "use server";
-import { prisma } from "@/db";
+import { prisma } from "@/prisma_db";
 import { error } from "console";
 import { Session } from "next-auth";
 import { redirect } from "next/navigation";

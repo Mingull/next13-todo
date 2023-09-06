@@ -1,5 +1,5 @@
 import PaginationControls from "@/components/PaginationControls";
-import { prisma } from "@/db";
+import { prisma } from "@/prisma_db";
 import { authOptions } from "@/lib/auth/options";
 import { AuthRequiredError, UserNotFoundError } from "@/lib/exceptions/Errors";
 import { Todo, User } from "@prisma/client";

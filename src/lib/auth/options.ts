@@ -1,11 +1,12 @@
-import { prisma } from "@/db";
-import { PrismaAdapter } from "@next-auth/prisma-adapter";
+import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import { NextAuthOptions } from "next-auth";
 import GithubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
+import { db } from "../db";
+import { users } from "../db/schema";
 
 export const authOptions: NextAuthOptions = {
-	adapter: PrismaAdapter(prisma),
+	adapter: DrizzleAdapter(db),
 	providers: [
 		GoogleProvider({
 			clientId: getGoogleCredentials().clientId,
@@ -32,7 +33,10 @@ export const authOptions: NextAuthOptions = {
 			return session;
 		},
 		async jwt({ token, user }) {
-			const dbUser = await prisma.user.findFirst({ where: { email: token.email } });
+			const dbUser = await db
+				.select()
+				.from(users)
+				.where((user) => user.email === token.email);
 			if (!dbUser) {
 				token.id = user.id;
 				return token;

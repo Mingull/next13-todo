@@ -3,7 +3,7 @@ import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import Image from "next/image";
 import { FC } from "react";
-import { prisma } from "@/db";
+import { prisma } from "@/prisma_db";
 import { UserNotFoundError } from "@/lib/exceptions/Errors";
 
 const Page = async ({ params }: { params: { userId: string } }) => {

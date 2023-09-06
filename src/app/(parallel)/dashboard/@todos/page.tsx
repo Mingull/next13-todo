@@ -1,7 +1,7 @@
 import Pagination from "@/components/Pagination";
 import PaginationControls from "@/components/PaginationControls";
 import { buttonVariants } from "@/components/Button";
-import { prisma } from "@/db";
+import { prisma } from "@/prisma_db";
 import { authOptions } from "@/lib/auth/options";
 import { AuthRequiredError } from "@/lib/exceptions/Errors";
 import { cn } from "@/lib/utils";
