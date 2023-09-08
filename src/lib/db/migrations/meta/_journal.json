@@ -1,0 +1,13 @@
+{
+  "version": "5",
+  "dialect": "mysql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1694161662070,
+      "tag": "0000_fantastic_thundra",
+      "breakpoints": true
+    }
+  ]
+}

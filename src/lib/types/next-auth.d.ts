@@ -1,11 +1,11 @@
 import type { User } from "next-auth";
-import { UserRole } from "@prisma/client";
+import { users } from "../db/schema";
 
 type UserId = string;
 declare module "next-auth/jwt" {
 	interface JWT {
 		id: UserId;
-		role: UserRole;
+		role: users.role;
 	}
 }
 
