@@ -1,8 +1,6 @@
 import { authOptions } from "@/lib/auth/options";
 import { TRPCError, initTRPC } from "@trpc/server";
-import { type CreateNextContextOptions } from "@trpc/server/adapters/next";
 import { getServerSession } from "next-auth/next";
-import superjson from "superjson";
 
 const t = initTRPC.create();
 
