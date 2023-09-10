@@ -4,18 +4,27 @@ import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { createTodo } from "@/lib/server/";
 import toast from "react-hot-toast";
+import { trpc } from "@/app/_trpc/client";
+import { useState } from "react";
 
 export default function Home() {
 	const { data: session } = useSession();
+	const getTodos = trpc.getTodos.useQuery();
+	const addTodo = trpc.addTodo.useMutation({
+		onSettled: () => {
+			getTodos.refetch();
+		},
+	});
+	const [title, setTitle] = useState<string>("");
 	const action = async (formData: FormData) => {
-		await toast.promise(createTodo(formData, session), {
-			error: (error) => {
-				console.log(error);
-				return error;
-			},
-			success: "Todo created",
-			loading: "loading...",
-		});
+		// await toast.promise(createTodo(formData, session), {
+		// 	error: (error) => {
+		// 		console.log(error);
+		// 		return error;
+		// 	},
+		// 	success: "Todo created",
+		// 	loading: "loading...",
+		// });
 	};
 	return (
 		<div className="container mx-auto">
