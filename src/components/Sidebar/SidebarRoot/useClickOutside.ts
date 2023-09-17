@@ -1,7 +1,7 @@
-import { MutableRefObject, useEffect, useRef } from "react";
+import { MutableRefObject, createRef, useEffect } from "react";
 
 const useClickOutside = (handler: () => void, initialRef?: MutableRefObject<HTMLDivElement | null>) => {
-	const ref = initialRef || useRef<HTMLDivElement | null>();
+	const ref = initialRef ?? createRef<HTMLDivElement | null>();
 
 	useEffect(() => {
 		const listener = (e: MouseEvent) => {

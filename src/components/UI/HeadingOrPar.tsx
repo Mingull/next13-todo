@@ -83,24 +83,33 @@ export const HeadingOrPar = React.forwardRef<
 	}
 });
 
+HeadingOrPar.displayName = "HeadingOrPar";
+
 export const H1 = React.forwardRef<HTMLHeadingElement, HeadingProps>(({ size, font, ...props }, ref) => (
 	<HeadingOrPar heading="1" size={size || "5xl"} font={font || "roboto"} {...props} ref={ref} />
 ));
+H1.displayName = "H1";
 export const H2 = React.forwardRef<HTMLHeadingElement, HeadingProps>(({ size, font, ...props }, ref) => (
 	<HeadingOrPar heading="2" size={size || "4xl"} font={font || "roboto"} {...props} ref={ref} />
 ));
+H2.displayName = "H2";
 export const H3 = React.forwardRef<HTMLHeadingElement, HeadingProps>(({ size, font, ...props }, ref) => (
 	<HeadingOrPar heading="3" size={size || "3xl"} font={font || "roboto"} {...props} ref={ref} />
 ));
+H3.displayName = "H3";
 export const H4 = React.forwardRef<HTMLHeadingElement, HeadingProps>(({ size, font, ...props }, ref) => (
 	<HeadingOrPar heading="4" size={size || "2xl"} font={font || "roboto"} {...props} ref={ref} />
 ));
+H4.displayName = "H4";
 export const H5 = React.forwardRef<HTMLHeadingElement, HeadingProps>(({ size, font, ...props }, ref) => (
 	<HeadingOrPar heading="5" size={size || "xl"} font={font || "roboto"} {...props} ref={ref} />
 ));
+H5.displayName = "H5";
 export const H6 = React.forwardRef<HTMLHeadingElement, HeadingProps>(({ size, font, ...props }, ref) => (
 	<HeadingOrPar heading="6" size={size || "lg"} font={font || "roboto"} {...props} ref={ref} />
 ));
+H6.displayName = "H6";
 export const P = React.forwardRef<HTMLParagraphElement, HeadingProps>(({ size, font, ...props }, ref) => (
 	<HeadingOrPar heading="P" size={size || "base"} font={font || "opensans"} {...props} ref={ref} />
 ));
+P.displayName = "P";

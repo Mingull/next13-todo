@@ -14,7 +14,7 @@ const createTodo = async (data: FormData, session: Session | null) => {
 
 		if (!session) throw new AuthRequiredError();
 
-		await prisma.todo.create({ data: { title, complete: false, userId: session.user.id } });
+		await prisma.todo.create({ data: { title, completed: false, userId: session.user.id } });
 	} catch (error) {
 		return {
 			error,

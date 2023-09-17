@@ -1,5 +1,5 @@
 import PaginationControls from "@/components/PaginationControls";
-import { buttonVariants } from "@/components/UI";
+import { buttonVariants } from "@/components/Button";
 import { prisma } from "@/prisma_db";
 import { authOptions } from "@/lib/auth/options";
 import { AuthRequiredError } from "@/lib/exceptions/Errors";
@@ -64,7 +64,7 @@ const Page = async ({ searchParams }: { searchParams: { [key: string]: string | 
 										<input
 											id="checkbox-table-search-1"
 											type="checkbox"
-											checked={todo.complete}
+											checked={todo.completed}
 											readOnly
 											className="w-4 h-4 text-blue-600 rounded bg-zinc-100 border-zinc-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-zinc-800 dark:focus:ring-offset-zinc-800 focus:ring-2 dark:bg-zinc-700 dark:border-zinc-600"
 										/>

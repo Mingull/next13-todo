@@ -4,5 +4,8 @@ import * as schema from "./schema";
 
 const connection = await mysql.createConnection({ uri: process.env.DATABASE_URL! });
 
-export const db = drizzle(connection, { schema, mode: "default" });
+export const db = drizzle(connection, {
+	schema,
+	mode: "default",
+});
 export type DBClient = typeof db;

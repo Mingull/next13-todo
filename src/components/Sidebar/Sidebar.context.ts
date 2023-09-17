@@ -8,7 +8,6 @@ interface SidebarContext {
 	setIsOpen: Dispatch<SetStateAction<boolean>>;
 	toggleSidebar(): void;
 	useClickOutside: (handler: () => void) => void;
-	settings: (set?: string | ((prevState: string) => string) | undefined) => string | undefined;
 }
 
 export const [SidebarProvider, useSidebar] = createSafeContext<SidebarContext>(

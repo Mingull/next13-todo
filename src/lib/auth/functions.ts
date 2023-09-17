@@ -2,7 +2,8 @@ import { NextAuthOptions, Session, getServerSession } from "next-auth";
 import { AuthRequiredError } from "../exceptions/Errors";
 
 // // Import createServerState and createServerEffect functions and types
-import { createServerEffect, createServerState } from "../utils";
+// import { createServerEffect, createServerState } from "../utils";
+import { UndoIcon } from "lucide-react";
 
 type AuthorizedResponse = {
 	status: "authorized";
@@ -28,61 +29,89 @@ type UnauthorizedResponse = {
 type SecureSession = (
 	authOptions: NextAuthOptions,
 	throwError?: boolean
-) => Promise<AuthorizedResponse | LoadingResponse | ErrorResponse | UnauthorizedResponse>;
+) => Promise<AuthorizedResponse | ErrorResponse | UnauthorizedResponse>;
 
 export const getSecureServerSession: SecureSession = async (authOptions, throwError) => {
-	// const [session, setSession] = createServerState<Session | null>(null);
-	// const [isLoading, setLoading] = createServerState<boolean>(true);
-	// const [errorMessage, setErrorMessage] = createServerState<string | undefined>(undefined);
-	// const [response, setResponse] = createServerState<
-	// 	AuthorizedResponse | UnauthorizedResponse | LoadingResponse | ErrorResponse
-	// >({ status: "loading", session: null });
+	try {
+		const session = await getServerSession(authOptions);
 
-	// 	const fetchSessionAsync = async () => {
-	// 		if (isLoading) {
-	// 			const timeoutPromise = new Promise<null>((resolve) => {
-	// 				setTimeout(() => resolve(null), 5000); // Adjust the timeout as needed
-	// 			});
+		if (!session && throwError) throw new AuthRequiredError();
 
-	// 			try {
-	// 				if (session === null) {
-	// 					const fetchedSession = await Promise.race([getServerSession(authOptions), timeoutPromise]);
-	// 					setSession(fetchedSession);
-	// 				}
+		if (!session) {
+			return {
+				status: "unauthorized",
+				session: null,
+			};
+		}
 
-	// 				if (session && !throwError) {
-	// 					throw new AuthRequiredError();
-	// 				}
-	// 			} catch (error: any) {
-	// 				console.error("Error in getSecureServerSession:", error);
-	// 				setErrorMessage(error.message || "An error occurred.");
-	// 			} finally {
-	// 				setLoading((prev) => !prev);
-	// 			}
-	// 		}
-	// 	};
+		return { status: "authorized", session };
+	} catch (error) {
+		if (error instanceof AuthRequiredError)
+			return {
+				status: "error",
+				message: error.message,
+				session: null,
+			};
 
-	// 	createServerEffect(() => {
-	// 		fetchSessionAsync(); // Call the async function
-	// 		if (isLoading && !session) {
-	// 			setResponse({ status: "loading", session: null });
-	// 		} else if (!session && errorMessage) {
-	// 			setResponse({ status: "error", session: null, message: errorMessage });
-	// 		} else if (!session) {
-	// 			setResponse({ status: "unauthorized", session: null });
-	// 		} else {
-	// 			setResponse({ status: "authorized", session });
-	// 		}
-	// 		console.log({ response });
-	// 	}, [session, isLoading, errorMessage]);
-
-	return { status: "loading", session: null };
+		return {
+			status: "error",
+			message: "Something went wrong",
+			session: null,
+		};
+	}
 };
+// const [session, setSession] = createServerState<Session | null>(null);
+// const [isLoading, setLoading] = createServerState<boolean>(true);
+// const [errorMessage, setErrorMessage] = createServerState<string | undefined>(undefined);
+// const [response, setResponse] = createServerState<
+// 	AuthorizedResponse | UnauthorizedResponse | LoadingResponse | ErrorResponse
+// >({ status: "loading", session: null });
 
-const [session, setSession] = createServerState<Session | null>(null);
+// 	const fetchSessionAsync = async () => {
+// 		if (isLoading) {
+// 			const timeoutPromise = new Promise<null>((resolve) => {
+// 				setTimeout(() => resolve(null), 5000); // Adjust the timeout as needed
+// 			});
 
-setSession((prev) => (!prev ? { expires: "1", user: { id: "1", role: "ADMIN" } } : prev));
+// 			try {
+// 				if (session === null) {
+// 					const fetchedSession = await Promise.race([getServerSession(authOptions), timeoutPromise]);
+// 					setSession(fetchedSession);
+// 				}
 
-createServerEffect(() => {
-	console.log({ session });
-}, [session]);
+// 				if (session && !throwError) {
+// 					throw new AuthRequiredError();
+// 				}
+// 			} catch (error: any) {
+// 				console.error("Error in getSecureServerSession:", error);
+// 				setErrorMessage(error.message || "An error occurred.");
+// 			} finally {
+// 				setLoading((prev) => !prev);
+// 			}
+// 		}
+// 	};
+
+// 	createServerEffect(() => {
+// 		fetchSessionAsync(); // Call the async function
+// 		if (isLoading && !session) {
+// 			setResponse({ status: "loading", session: null });
+// 		} else if (!session && errorMessage) {
+// 			setResponse({ status: "error", session: null, message: errorMessage });
+// 		} else if (!session) {
+// 			setResponse({ status: "unauthorized", session: null });
+// 		} else {
+// 			setResponse({ status: "authorized", session });
+// 		}
+// 		console.log({ response });
+// 	}, [session, isLoading, errorMessage]);
+
+// return { status: "loading", session: null };
+// };
+
+// const [session, setSession] = createServerState<Session | null>(null);
+
+// setSession((prev) => (!prev ? { expires: "1", user: { id: "1", role: "ADMIN" } } : prev));
+
+// createServerEffect(() => {
+// 	console.log({ session });
+// }, [session]);

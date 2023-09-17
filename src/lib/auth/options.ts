@@ -1,10 +1,12 @@
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
+import { eq } from "drizzle-orm";
+import { MySqlSchema } from "drizzle-orm/mysql-core";
 import { NextAuthOptions } from "next-auth";
 import GithubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
 import { db } from "../db";
 import { users } from "../db/schema";
-import { SQLWrapper, eq } from "drizzle-orm";
+import { PrismaAdapter } from "@auth/prisma-adapter";
 
 export const authOptions: NextAuthOptions = {
 	adapter: DrizzleAdapter(db),
@@ -39,6 +41,7 @@ export const authOptions: NextAuthOptions = {
 				.from(users)
 				.where(eq(users.email, token.email as string))
 				.then((res) => res[0]);
+
 			if (!dbUser) {
 				token.id = user.id;
 				return token;

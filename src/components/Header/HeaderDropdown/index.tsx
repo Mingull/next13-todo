@@ -28,8 +28,9 @@ const index: FC<indexProps> = ({ items, user }) => {
 					Sign out
 				</a>
 			}
-			children={<HeaderButton user={user} />}
-		/>
+		>
+			<HeaderButton user={user} />
+		</Dropdown>
 	);
 };
 

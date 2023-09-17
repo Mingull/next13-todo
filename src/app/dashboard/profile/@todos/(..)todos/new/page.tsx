@@ -1,7 +1,7 @@
 "use client";
 
 import { Modal } from "@/components/Modal";
-import { buttonVariants } from "@/components/UI";
+import { buttonVariants } from "@/components/Button";
 import { useOnModalDismiss } from "@/lib/hooks";
 import { createTodo } from "@/lib/server";
 import { useSession } from "next-auth/react";
