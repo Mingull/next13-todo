@@ -43,7 +43,7 @@ const SidebarWrapper = React.forwardRef<HTMLDivElement, SidebarWrapperProps>(
 						transition: {
 							type: "spring",
 							bounce: 0.25,
-							duration: 0.5,
+							duration: 0.4,
 						},
 					},
 					closed: {

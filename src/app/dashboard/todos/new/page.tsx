@@ -25,7 +25,7 @@ export default function Home() {
 		// 	success: "Todo created",
 		// 	loading: "loading...",
 		// });
-	};
+};
 	return (
 		<div className="container mx-auto">
 			<header className="flex items-center justify-between mb-4">
