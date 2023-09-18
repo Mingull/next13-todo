@@ -1,4 +1,4 @@
-import { DrizzleAdapter } from "@auth/drizzle-adapter";
+import { DrizzleAdapter } from "@/lib/db/DrizzleAdapter";
 import { eq } from "drizzle-orm";
 import { MySqlSchema } from "drizzle-orm/mysql-core";
 import { NextAuthOptions } from "next-auth";
@@ -6,7 +6,6 @@ import GithubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
 import { db } from "../db";
 import { users } from "../db/schema";
-import { PrismaAdapter } from "@auth/prisma-adapter";
 
 export const authOptions: NextAuthOptions = {
 	adapter: DrizzleAdapter(db),

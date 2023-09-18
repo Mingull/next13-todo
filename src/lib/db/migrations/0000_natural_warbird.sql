@@ -11,7 +11,7 @@ CREATE TABLE `accounts` (
 	`scope` varchar(255),
 	`id_token` varchar(255),
 	`session_state` varchar(255),
-	CONSTRAINT `accounts_id` PRIMARY KEY(`id`)
+	CONSTRAINT `account_id` PRIMARY KEY(`id`)
 );
 --> statement-breakpoint
 CREATE TABLE `passwords` (
@@ -55,8 +55,8 @@ CREATE TABLE `users` (
 	`email_verified` timestamp(3) DEFAULT (now()),
 	`image` varchar(255),
 	`role` enum('USER','MODERATOR','ADMIN','SUPERADMIN') NOT NULL DEFAULT 'USER',
-	CONSTRAINT `users_id` PRIMARY KEY(`id`),
-	CONSTRAINT `users_email_unique` UNIQUE(`email`)
+	CONSTRAINT `user_id` PRIMARY KEY(`id`),
+	CONSTRAINT `user_email_unique` UNIQUE(`email`)
 );
 --> statement-breakpoint
 CREATE TABLE `verification_tokens` (
@@ -67,8 +67,8 @@ CREATE TABLE `verification_tokens` (
 	CONSTRAINT `verification_tokens_id` PRIMARY KEY(`id`)
 );
 --> statement-breakpoint
-ALTER TABLE `accounts` ADD CONSTRAINT `accounts_user_id_users_id_fk` FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE cascade ON UPDATE cascade;--> statement-breakpoint
-ALTER TABLE `passwords` ADD CONSTRAINT `passwords_user_id_users_id_fk` FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE cascade ON UPDATE cascade;--> statement-breakpoint
+ALTER TABLE `accounts` ADD CONSTRAINT `account_user_id_user_id_fk` FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE cascade ON UPDATE cascade;--> statement-breakpoint
+ALTER TABLE `passwords` ADD CONSTRAINT `passwords_user_id_user_id_fk` FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE cascade ON UPDATE cascade;--> statement-breakpoint
 ALTER TABLE `passwords` ADD CONSTRAINT `passwords_service_id_services_id_fk` FOREIGN KEY (`service_id`) REFERENCES `services`(`id`) ON DELETE cascade ON UPDATE cascade;--> statement-breakpoint
-ALTER TABLE `sessions` ADD CONSTRAINT `sessions_user_id_users_id_fk` FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE cascade ON UPDATE cascade;--> statement-breakpoint
-ALTER TABLE `todos` ADD CONSTRAINT `todos_user_id_users_id_fk` FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE cascade ON UPDATE cascade;
+ALTER TABLE `sessions` ADD CONSTRAINT `sessions_user_id_user_id_fk` FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE cascade ON UPDATE cascade;--> statement-breakpoint
+ALTER TABLE `todos` ADD CONSTRAINT `todos_user_id_user_id_fk` FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE cascade ON UPDATE cascade;

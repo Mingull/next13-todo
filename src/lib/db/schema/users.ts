@@ -5,7 +5,7 @@ import { passwords } from "./passwords";
 import { sessions } from "./sessions";
 import { todos } from "./todos";
 
-export const users = mysqlTable("users", {
+export const users = mysqlTable("user", {
 	id: varchar("id", { length: 255 }).notNull().primaryKey(),
 	name: varchar("name", { length: 255 }),
 	email: varchar("email", { length: 255 }).unique(),
